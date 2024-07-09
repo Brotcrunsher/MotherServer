@@ -3,6 +3,7 @@ import websockets
 import nacl.utils
 import base64
 import hashlib
+import ssl
 
 with open("/home/MotherServer/hashedPw.txt", "r") as f:
     pw_hash = f.read()
@@ -64,8 +65,10 @@ async def handle_websocket(websocket, path):
 
 if __name__ == "__main__":
     print("Starting Server...")
+    ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+    ssl_context.load_cert_chain("/home/MotherServer/domain.crt", keyfile="/home/MotherServer/domain.key")
     # Start the WebSocket server
-    start_server = websockets.serve(handle_websocket, "localhost", 8765)
+    start_server = websockets.serve(handle_websocket, "CHANGE ME TO ADDRESS", 8765, ssl=ssl_context)
     
     print("Run until complete...")
     asyncio.get_event_loop().run_until_complete(start_server)

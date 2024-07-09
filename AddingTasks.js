@@ -19,7 +19,7 @@ function sendTask()
   document.querySelector("[type=button]").setAttribute("disabled", "disabled");
 
   // Connect to server
-  ws = new WebSocket("ws://CHANGE ME TO ADDRESS:PORT")
+  ws = new WebSocket("wss://CHANGE ME TO ADDRESS:8765")
   messageState = 0
   
   ws.onopen = () => {
