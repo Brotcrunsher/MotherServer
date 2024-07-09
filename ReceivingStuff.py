@@ -63,9 +63,12 @@ async def handle_websocket(websocket, path):
         pass
 
 if __name__ == "__main__":
+    print("Starting Server...")
     # Start the WebSocket server
     start_server = websockets.serve(handle_websocket, "localhost", 8765)
-
+    
+    print("Run until complete...")
     asyncio.get_event_loop().run_until_complete(start_server)
+    print("Run forever...")
     asyncio.get_event_loop().run_forever()
     
