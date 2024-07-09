@@ -151,11 +151,9 @@ int main(void)
         exit(1);
     }
 
-    printf("server: waiting for connections...\n");
-   	
 	char key[32];
 	{
-		FILE* keyFile = fopen("~/chachaKey.dat", "r");
+		FILE* keyFile = fopen("/home/MotherServer/chachaKey.dat", "r");
 		if(!keyFile)
 		{
 			printf("Couldn't open Key!\n");
@@ -168,6 +166,8 @@ int main(void)
 		fclose(keyFile);
 	}
     printf("Key read!\n");
+	
+    printf("server: waiting for connections...\n");
 
     while(1) {  // main accept() loop
 		if (sodium_init() == -1) {
@@ -186,10 +186,10 @@ int main(void)
         printf("server: got connection from %s\n", s);
 		
         printf("A");fflush(stdout);
-		FILE *tasks = fopen("~/Tasks.txt", "r");
+		FILE *tasks = fopen("/home/MotherServer/Tasks.txt", "r");
 		if(!tasks)
 		{
-			tasks = fopen("~/Tasks.txt", "ab+");
+			tasks = fopen("/home/MotherServer/Tasks.txt", "ab+");
 		}
 		if(!tasks)
 		{

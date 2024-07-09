@@ -4,22 +4,27 @@ import nacl.utils
 import base64
 import hashlib
 
-with open("CHANGE ME TO HASHED PW LOCATION!", "r") as f:
+with open("/home/MotherServer/hashedPw.txt", "r") as f:
     pw_hash = f.read()
 
 # Define a callback function to handle incoming WebSocket messages
 async def handle_websocket(websocket, path):
     try:
         while True:
+            print("Waiting for new Message...")
             message = await websocket.recv()
             if message != "Give Challenge plz":
+                print("Connection partner sent something unexpected.")
                 await websocket.close()
                 continue
             
             challenge = base64.b64encode(nacl.utils.random(size=32)).decode('ascii')
+            print("Sending challenge...")
             await websocket.send(challenge)
+            print("Challenge sent! Waiting for reply...")
             task = await websocket.recv()
             if len(task) == 0:
+              print("Received empty task.")
               await websocket.send("Empty Task!")
               await websocket.close()
               continue
@@ -40,14 +45,20 @@ async def handle_websocket(websocket, path):
             print("Challenge Response Received: " + challenge_response_received)
             print("Challenge Response Expected: " + challenge_response_expected)
             
+            # Todo: I believe this allows for a potential side channel attack?
             if challenge_response_received == challenge_response_expected:
-              with open("Tasks.txt", "a") as f:
+              print("Writing to file...")
+              with open("/home/MotherServer/Tasks.txt", "a") as f:
                 f.write(challenge_response_expected + ":" + task + "\n")
+              print("Success!")
               await websocket.send("All good!")
             else:
+              print("Got bad challenge.")
               await websocket.send("Bad password!")
             
+            print("Closing...")
             await websocket.close()
+            print("Closed!")
     except websockets.ConnectionClosed:
         pass
 
