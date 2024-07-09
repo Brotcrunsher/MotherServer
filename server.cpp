@@ -155,7 +155,7 @@ int main(void)
    	
 	char key[32];
 	{
-		FILE* keyFile = fopen(CHANGE ME TO KEY LOCATION, "r");
+		FILE* keyFile = fopen("~/chachaKey.dat", "r");
 		if(!keyFile)
 		{
 			printf("Couldn't open Key!\n");
@@ -186,7 +186,11 @@ int main(void)
         printf("server: got connection from %s\n", s);
 		
         printf("A");fflush(stdout);
-		FILE *tasks = fopen("./Tasks.txt", "r");
+		FILE *tasks = fopen("~/Tasks.txt", "r");
+		if(!tasks)
+		{
+			tasks = fopen("~/Tasks.txt", "ab+");
+		}
 		if(!tasks)
 		{
 			printf("Couldn't open Tasks!\n");
