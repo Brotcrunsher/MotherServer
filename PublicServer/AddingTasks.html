@@ -1,11 +1,52 @@
-<html>
-  <head>
-  </head>
-  <body>
-    <input id="task" type="text" onkeypress="filterEnter(event)"></input><br>
-    <input id="password" type="password" onkeypress="filterEnter(event)"></input><br>
-    <button type="button" onclick="sendTask()">Click Me!</button><br><br>
-	<input id="answer" type="text" class="field left" readonly></input>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adding Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .readonly {
+            background-color: #f0f0f0;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 40px;
+            }
+
+            input, button {
+                font-size: 18px;
+                max-width: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <input id="task" type="text" onkeypress="filterEnter(event)" placeholder="Task title">
+    <input id="password" type="password" onkeypress="filterEnter(event)" placeholder="Password">
+    <button type="button" onclick="sendTask()">Add the Task!</button>
+    <input id="answer" type="text" class="readonly" readonly placeholder="Server Response">
     <script src="AddingTasks.js"></script>
-  </body>
+</body>
 </html>
