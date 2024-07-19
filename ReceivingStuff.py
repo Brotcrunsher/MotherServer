@@ -43,7 +43,7 @@ async def handle_websocket(websocket, path):
             task = task.replace("ß", "ss")
             
             print("Task: " + task)
-            print("Challenge Response Received: " + challenge_response_received)
+            #print("Challenge Response Received: " + challenge_response_received)
             print("Challenge Response Expected: " + challenge_response_expected)
             
             # Todo: I believe this allows for a potential side channel attack?
