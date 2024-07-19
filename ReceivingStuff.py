@@ -33,15 +33,6 @@ async def handle_websocket(websocket, path):
             
             challenge_response_expected = hashlib.sha512((challenge + pw_hash + task).encode('utf-8')).hexdigest()
             
-            # Todo: This is only because bbe::UTF8String isn't actually utf8...
-            task = task.replace("ä", "ae")
-            task = task.replace("ö", "oe")
-            task = task.replace("ü", "ue")
-            task = task.replace("Ä", "Ae")
-            task = task.replace("Ö", "Oe")
-            task = task.replace("Ü", "Ue")
-            task = task.replace("ß", "ss")
-            
             print("Task: " + task)
             #print("Challenge Response Received: " + challenge_response_received)
             print("Challenge Response Expected: " + challenge_response_expected)
