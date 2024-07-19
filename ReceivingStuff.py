@@ -24,15 +24,14 @@ async def handle_websocket(websocket, path):
             await websocket.send(challenge)
             print("Challenge sent! Waiting for reply...")
             task = await websocket.recv()
-            length = len(task)
-            if length == 0:
-              print("Received empty task.")
-              await websocket.send("Empty Task!")
-              await websocket.close()
-              continue
-            if length > 1024:
+            if len(task) > 1024:
               print("Task Length sanity check exceeded with length: " + str(length))
               await websocket.send("Task too long!")
+              await websocket.close()
+              continue
+            if len(task.strip()) == 0:
+              print("Received empty task.")
+              await websocket.send("Empty Task!")
               await websocket.close()
               continue
             challenge_response_received = await websocket.recv()
